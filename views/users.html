@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% set title = "Users" %}
+{% set page = "users" %}
+
+{% block content %}
+<!-- no error handling yet -->
+<div class='container'>
+  <form action='/users' method='POST'>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Username</span>
+        </div>
+        <input type="text" name="name" class="form-control" placeholder="Enter name for user" aria-label="Recipient's username" aria-describedby="basic-addon2"><!-- uses name attribute to create db record -->
+        <div class="input-group-append">
+          <button class="btn btn-primary">Create User</button>
+        </div>
+    </div>
+  </form>
+</div>
+<ul class='list-group'>
+    {% for user in users %}
+    <li class='list-group-item'>
+      <form method='POST' action='/users/{{user.id}}?_method=DELETE'>
+        <p><strong>{{ user.name }}</strong>&nbsp;
+        <button class='btn btn-danger btn-sm'>Delete</button></p>
+      </form>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
