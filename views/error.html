@@ -1,1 +1,10 @@
 {% extends "layout.html" %}
+
+{% set title = "Error" %}
+{% set page = "error" %}
+
+{% block content %}
+<div class='jumbotron'>
+    <strong>{{ path }}</strong> does not exist. :/
+</div>
+{% endblock %}

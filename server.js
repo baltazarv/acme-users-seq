@@ -5,6 +5,7 @@ const port = process.env.PORT || 3000;
 const app = express();
 const bodyParser = require('body-parser');
 var db = require('./db');
+const users =
 
 app.use(require('method-override')('_method'));
 app.use(bodyParser.urlencoded({ extended: true })); // HTML form submits
@@ -19,15 +20,18 @@ app.use(express.static(__dirname + '/public'));
 db.sync()
   .then(() => db.seed());
 
+app.get('/', (req, res, next) => {
+  res.render('index');
+});
+
 /* WHY ISN'T app.use WORKING?! */
 // app.use('/users', require('./routes/users'));
-app.get('*', require('./routes/users'));
-app.post('*', require('./routes/users'));
-app.delete('*', require('./routes/users'));
+app.use('/users', require('./routes/users'));
 
 app.use((req, res, next) => {
-  res.status(400);
-  res.render('error', { title: '404: File Not Found' });
+  var path = req.path;
+  res.status(400)
+    .render('error', { title: '404: File Not Found', path });
 });
 
 app.listen(port, () => {
